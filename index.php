@@ -48,19 +48,31 @@ include_once './conexao.php';
             </tr>
 
             <?php
-            while ($row = mysqli_fetch_assoc($executa_query)) {
+            while ($linha = mysqli_fetch_assoc($executa_query)) {
             ?>
 
                 <tr>
-                    <td><?php echo $row['id']; ?></td>
-                    <td> <?php echo $row['nome']; ?></td>
-                    <td><?php echo '<img src="fotos/' . $row['foto'] . '" width="100px" height="100px" alt="Foto">' ?></td>
-                    <td> <a href="#">Editar</a></td>
-                    <td> <a href="#">Apagar</a></td>
+                    <td><?php echo $linha['id']; ?></td>
+                    <td> 
+                        <?php echo ucwords(strtolower($linha['nome'])); ?>
+                    </td>
+                    <td><?php echo '<img src="fotos/' . $linha['id'] . '/' . $linha['foto'] . '" width="100px" height="100px" alt="Foto">' ?></td>
+                    <td>
+                        <form action="editar.php" method="POST">
+                            <input type="hidden" name="editar_id" value="<?php echo $linha['id'] ?>">
+                            <input type="submit" name="editar" value="Editar">
+                        </form>
+                    </td>
+                    <td>
+                        <form action="cadastrar.php" method="POST">
+                            <input type="hidden" name="deletar_id" value="<?php echo $linha['id'] ?>">
+                            <input type="submit" name="deletar" value="Deletar">
+                        </form>
+                    </td>
                 </tr>
 
             <?php
-                }
+            }
             ?>
 
         </table>
