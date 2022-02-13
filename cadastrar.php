@@ -51,11 +51,10 @@ if (isset($_POST['editar_perfil'])) {
         $_SESSION['status'] = "Foto já existente '.$valida_foto.'";
         header('Location: index.php');
     } else {
+        $query = "UPDATE cadastro SET nome='$editar_nome', foto='$editar_foto' WHERE id='$editar_id'";
+        $executar = mysqli_query($conn, $query);
+
         if ($executar) {
-
-            $query = "UPDATE cadastro SET nome='$editar_nome', foto='$editar_foto' WHERE id='$editar_id' ";
-            $executar = mysqli_query($conn, $query);
-
             move_uploaded_file($_FILES['foto']['tmp_name'], 'fotos/' . $editar_id . '/' . $_FILES['foto']['name']);
             $_SESSION['success'] = "Cadastro atualizado!";
             header('Location: index.php');
